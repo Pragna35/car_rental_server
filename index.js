@@ -87,7 +87,7 @@ app.post("/register",  (req,res) => {
         
         const user = result[0];
 
-         // Comparing the passwords using bcrypt 
+         // Comparing the passwords 
          bcrypt.compare(password, user.password,(err, isMatch) => {
             if(err){
                 return res.status(500).json({message: 'Error comparing passwords'});
@@ -96,10 +96,10 @@ app.post("/register",  (req,res) => {
                 return res.status(400).json({message: 'Invalid credentials'})
             }
 
-             // Generating JWT token 
+             // Generating  token 
              const token = jwt.sign({userId:user.id, username:user.username},JWT_SECRET, {expiresIn: "1h"});
 
-             // Sending the token  to the frontend
+             // Sending the token to the client
              res.json({token})
          })
     })
